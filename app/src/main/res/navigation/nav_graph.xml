@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_lessons">
+
+    <!-- Lessons Fragment -->
+    <fragment
+        android:id="@+id/nav_lessons"
+        android:name="com.example.duoclone.fragments.LessonsFragment"
+        android:label="Уроки"/>
+
+    <!-- Progress Fragment -->
+    <fragment
+        android:id="@+id/nav_progress"
+        android:name="com.example.duoclone.fragments.ProgressFragment"
+        android:label="Прогресс"/>
+
+    <!-- Profile Fragment -->
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.duoclone.fragments.ProfileFragment"
+        android:label="Профиль"/>
+</navigation>

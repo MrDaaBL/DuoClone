@@ -2,21 +2,34 @@ package com.example.duoclone.fragments;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.example.duoclone.R;
+import com.example.duoclone.adapters.AchievementsAdapter;
+import com.example.duoclone.utils.FirestoreManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragment extends Fragment {
-
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
+    private FirestoreManager firestoreManager;
+    private RecyclerView achievementsRecyclerView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Инфлейтим макет фрагмента
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        achievementsRecyclerView = view.findViewById(R.id.achievements_recycler_view);
+        achievementsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        firestoreManager.getUserAchievements(userId, achievements -> {
+            AchievementsAdapter adapter = new AchievementsAdapter(achievements);
+            achievementsRecyclerView.setAdapter(adapter);
+        });
+
+        return view;
     }
 }

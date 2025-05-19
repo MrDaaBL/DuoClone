@@ -1,4 +1,4 @@
-package com.example.duoclone.activities.ui.slideshow;
+package com.example.duoclone.ui.slideshow;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

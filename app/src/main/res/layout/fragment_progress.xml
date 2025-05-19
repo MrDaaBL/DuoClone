@@ -4,12 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="24dp">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"/>
 
     <TextView
+        android:id="@+id/xp_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ваш прогресс будет здесь"
-        android:textSize="18sp"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"/>
 
 </LinearLayout>

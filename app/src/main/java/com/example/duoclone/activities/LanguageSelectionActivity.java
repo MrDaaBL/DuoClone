@@ -19,7 +19,6 @@ public class LanguageSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language_selection);
 
-        // Создаем список языков
         List<Language> languages = new ArrayList<>();
         languages.add(new Language("English", R.drawable.flag_usa));
         languages.add(new Language("Русский", R.drawable.flag_russia));
@@ -29,31 +28,21 @@ public class LanguageSelectionActivity extends AppCompatActivity {
         languages.add(new Language("中文", R.drawable.flag_china));
         languages.add(new Language("日本語", R.drawable.flag_japan));
 
-        // Находим контейнер для языков
         LinearLayout container = findViewById(R.id.languagesContainer);
-
-        // Динамически добавляем элементы
         for (Language lang : languages) {
-            // Создаем элемент языка
-            View languageItem = getLayoutInflater().inflate(R.layout.item_language, container, false);
+            View view = getLayoutInflater().inflate(R.layout.item_language, container, false);
+            ImageView flag = view.findViewById(R.id.flag);
+            TextView name = view.findViewById(R.id.languageName);
 
-            // Находим элементы внутри item_language
-            ImageView flag = languageItem.findViewById(R.id.flag);
-            TextView name = languageItem.findViewById(R.id.languageName);
-
-            // Устанавливаем данные
             flag.setImageResource(lang.getFlagResourceId());
             name.setText(lang.getName());
 
-            // Обработчик клика
-            languageItem.setOnClickListener(v -> {
-                // Переход на главный экран
-                Intent intent = new Intent(LanguageSelectionActivity.this, MainActivity.class);
+            view.setOnClickListener(v -> {
+                // Запуск MainActivity БЕЗ закрытия текущей активности
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             });
-
-            // Добавляем в контейнер
-            container.addView(languageItem);
+            container.addView(view);
         }
     }
 }

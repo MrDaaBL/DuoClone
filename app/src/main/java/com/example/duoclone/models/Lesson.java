@@ -6,6 +6,8 @@ public class Lesson {
     private final int completedExercises;
     private final boolean isCompleted;
 
+
+
     public Lesson(String title, int totalExercises, int completedExercises, boolean isCompleted) {
         this.title = title;
         this.totalExercises = totalExercises;

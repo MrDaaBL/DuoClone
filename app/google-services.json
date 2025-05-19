@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "468659197402",
+    "project_id": "duoclone-7a4ca",
+    "storage_bucket": "duoclone-7a4ca.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468659197402:android:f94876b9e027239ca41ce3",
+        "android_client_info": {
+          "package_name": "com.example.duoclone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5SzuoG4FZsEccY0ozeXjVV2q1XFHnQ_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

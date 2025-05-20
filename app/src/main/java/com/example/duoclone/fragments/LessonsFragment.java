@@ -28,8 +28,8 @@ public class LessonsFragment extends Fragment {
 
         // Загрузка данных
         List<Lesson> lessons = new ArrayList<>();
-        lessons.add(new Lesson("Основы 1", 10, 5, false));
-        lessons.add(new Lesson("Приветствия", 8, 3, true));
+        lessons.add(new Lesson("Негіздері 1", 10, 5, false));
+        lessons.add(new Lesson("Сәлемдесу", 8, 3, true));
 
         // Инициализация адаптера
         adapter = new LessonAdapter(lessons);

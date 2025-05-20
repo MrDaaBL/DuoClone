@@ -1,5 +1,6 @@
 package com.example.duoclone.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.duoclone.R;
+import com.example.duoclone.activities.LoginActivity;
 import com.example.duoclone.adapters.AchievementsAdapter;
 import com.example.duoclone.utils.FirestoreManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,11 +26,13 @@ public class ProfileFragment extends Fragment {
         achievementsRecyclerView = view.findViewById(R.id.achievements_recycler_view);
         achievementsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
+        // Получение ID текущего пользователя
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        firestoreManager.getUserAchievements(userId, achievements -> {
-            AchievementsAdapter adapter = new AchievementsAdapter(achievements);
-            achievementsRecyclerView.setAdapter(adapter);
-        });
+        if (userId == null) {
+            // Пользователь не авторизован
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            getActivity().finish();
+        }
 
         return view;
     }

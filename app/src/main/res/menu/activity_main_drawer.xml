@@ -20,13 +20,16 @@
 
         <item
             android:id="@+id/nav_lessons"
-            android:title="Уроки"/>
+            android:title="@string/menu_lessons"
+            />
         <item
             android:id="@+id/nav_progress"
-            android:title="Прогресс"/>
+            android:title="Прогресс"
+            />
         <item
             android:id="@+id/nav_profile"
-            android:title="Профиль"/>
+            android:title="@string/menu_profile"
+            />
 
     </group>
 </menu>

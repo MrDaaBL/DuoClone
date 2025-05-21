@@ -1,22 +1,24 @@
 package com.example.duoclone.utils;
 
+import static android.content.ContentValues.TAG;
+
 import android.util.Log;
 import com.example.duoclone.models.Achievement;
 import com.example.duoclone.models.User;
+import com.example.duoclone.models.VocabularyCard;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FirestoreManager {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    // Интерфейс для загрузки прогресса
-    public interface FirestoreCallback {
-        void onSuccess(User progress);
-        void onFailure(Exception e);
-    }
 
     // Интерфейс для загрузки достижений
     public interface FirestoreAchievementsCallback {
@@ -60,6 +62,50 @@ public class FirestoreManager {
                 .addOnFailureListener(e -> {
                     Log.e("Firestore", "Ошибка загрузки достижений", e);
                     callback.onFailure(e);
+                });
+    }
+
+    public void saveLessonResult(String userId, String lessonId, int score) {
+        DocumentReference docRef = db.collection("users")
+                .document(userId)
+                .collection("lessons")
+                .document(lessonId);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("score", score);
+        data.put("timestamp", FieldValue.serverTimestamp());
+
+        docRef.set(data)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "Урок сохранен"))
+                .addOnFailureListener(e -> Log.w(TAG, "Ошибка", e));
+    }
+
+
+    public void saveVocabularyProgress(String userId, VocabularyCard card) {
+        db.collection("users")
+                .document(userId)
+                .collection("vocabulary")
+                .document(card.getWord())
+                .set(card);
+    }
+
+    public interface FirestoreCallback {
+        void onSuccess(User progress);
+        void onFailure(Exception e);
+        void onVocabularyLoaded(List<VocabularyCard> cards); // Добавлен новый метод
+    }
+
+    public void loadVocabularyProgress(String userId, FirestoreCallback callback) {
+        db.collection("users")
+                .document(userId)
+                .collection("vocabulary")
+                .get()
+                .addOnSuccessListener(query -> {
+                    List<VocabularyCard> cards = new ArrayList<>();
+                    for (QueryDocumentSnapshot doc : query) {
+                        cards.add(doc.toObject(VocabularyCard.class));
+                    }
+                    callback.onVocabularyLoaded(cards);
                 });
     }
 }

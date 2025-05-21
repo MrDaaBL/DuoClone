@@ -1,0 +1,21 @@
+{
+  "lessons": [
+    {
+      "id": "kk_lesson1",
+      "title": "Негізгі сөздер",
+      "type": "vocabulary",
+      "content": [
+        {
+          "word": "Сәлем",
+          "translation": "Hello",
+          "options": ["Hello", "Bonjour", "Hola", "Привет"]
+        },
+        {
+          "word": "Рахмет",
+          "translation": "Thank you",
+          "options": ["Thanks", "Danke", "Gracias", "Thank you"]
+        }
+      ]
+    }
+  ]
+}

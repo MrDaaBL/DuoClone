@@ -1,7 +1,5 @@
 package com.example.duoclone.adapters;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.duoclone.R;
-import com.example.duoclone.activities.LessonActivity;
 import com.example.duoclone.models.Lesson;
 import java.util.List;
 
 public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.ViewHolder> {
-
     private final List<Lesson> lessons;
+    private OnLessonClickListener listener;
 
     public LessonAdapter(List<Lesson> lessons) {
         this.lessons = lessons;
@@ -34,16 +31,19 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Lesson lesson = lessons.get(position);
         holder.lessonTitle.setText(lesson.getTitle());
-        holder.lessonProgress.setText(
-                lesson.getCompletedExercises() + "/" + lesson.getTotalExercises() + " заданий выполнено"
-        );
 
-        // Обработка клика на элемент
+        // Использование строкового ресурса
+        String progress = holder.itemView.getContext().getString(
+                R.string.lesson_progress,
+                lesson.getCompletedExercises(),
+                lesson.getTotalExercises()
+        );
+        holder.lessonProgress.setText(progress);
+
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), LessonActivity.class);
-            intent.putExtra("lesson_title", lesson.getTitle()); // Передача данных
-            v.getContext().startActivity(intent);
-            ((Activity) v.getContext()).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            if (listener != null) {
+                listener.onLessonClick(lesson);
+            }
         });
     }
 
@@ -57,11 +57,19 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.ViewHolder
         public final TextView lessonTitle;
         public final TextView lessonProgress;
 
-        public ViewHolder(View view) {
-            super(view);
-            lessonIcon = view.findViewById(R.id.lessonIcon);
-            lessonTitle = view.findViewById(R.id.lessonTitle);
-            lessonProgress = view.findViewById(R.id.lessonProgress);
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            lessonIcon = itemView.findViewById(R.id.lessonIcon);
+            lessonTitle = itemView.findViewById(R.id.lessonTitle);
+            lessonProgress = itemView.findViewById(R.id.lessonProgress);
         }
+    }
+
+    public void setOnLessonClickListener(OnLessonClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnLessonClickListener {
+        void onLessonClick(Lesson lesson);
     }
 }

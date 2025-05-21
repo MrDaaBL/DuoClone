@@ -21,25 +21,22 @@ public class MainActivity extends AppCompatActivity {
         // Настройка Navigation Drawer
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
-        // Конфигурация верхнего меню
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_lessons,
-                R.id.nav_progress,
-                R.id.nav_profile
+                R.id.nav_profile,
+                R.id.nav_progress
         ).setOpenableLayout(drawer).build();
 
-        // Настройка NavController
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
-
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
     }
-
 }

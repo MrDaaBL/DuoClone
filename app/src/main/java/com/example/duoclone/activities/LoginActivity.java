@@ -22,11 +22,10 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "GoogleSignIn";
+    private static final String TAG = "GoogleAuth";
     private FirebaseAuth mAuth;
     private GoogleSignInClient googleSignInClient;
 
-    // Актуальный метод обработки результата (замена startActivityForResult)
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> handleSignInResult(result.getData())
@@ -37,24 +36,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Инициализация Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        // Настройка Google Sign-In с актуальными параметрами
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)) // Убедитесь, что client_id добавлен в strings.xml
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
+                .requestProfile()
                 .build();
 
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Обработчик кнопки Google Sign-In
         findViewById(R.id.google_sign_in_button).setOnClickListener(v -> signIn());
     }
 
     private void signIn() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
-        signInLauncher.launch(signInIntent); // Актуальный метод запуска
+        signInLauncher.launch(signInIntent);
     }
 
     private void handleSignInResult(Intent data) {
@@ -65,8 +62,8 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account.getIdToken());
             }
         } catch (ApiException e) {
-            Log.w(TAG, "Ошибка входа: " + e.getStatusCode(), e);
-            Toast.makeText(this, "Ошибка входа: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.w(TAG, "Error: " + e.getStatusCode(), e);
+            Toast.makeText(this, "Auth failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -75,32 +72,30 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                        if (firebaseUser != null) {
-                            saveUserToFirestore(firebaseUser); // Сохранение данных в Firestore
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            saveUserToFirestore(user);
                             startActivity(new Intent(this, MainActivity.class));
                             finish();
                         }
                     } else {
-                        Toast.makeText(this, "Ошибка аутентификации", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Firebase auth error", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    // Сохранение пользователя в Firestore
     private void saveUserToFirestore(FirebaseUser firebaseUser) {
         User user = new User(
                 firebaseUser.getUid(),
                 firebaseUser.getDisplayName(),
                 firebaseUser.getEmail(),
-                0, // Начальный прогресс
-                0  // Начальный XP
+                0, 0, 0
         );
 
         FirebaseFirestore.getInstance().collection("users")
                 .document(firebaseUser.getUid())
                 .set(user)
-                .addOnSuccessListener(aVoid -> Log.d(TAG, "Пользователь сохранен"))
-                .addOnFailureListener(e -> Log.w(TAG, "Ошибка сохранения", e));
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "User saved"))
+                .addOnFailureListener(e -> Log.w(TAG, "Save error", e));
     }
 }

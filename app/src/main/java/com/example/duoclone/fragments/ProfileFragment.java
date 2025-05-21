@@ -29,12 +29,8 @@ public class ProfileFragment extends Fragment {
         userNameText = view.findViewById(R.id.user_name);
         firestoreManager = new FirestoreManager();
 
-        // Настройка RecyclerView
         achievementsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-        // Загрузка данных
         loadProfileData();
-
         return view;
     }
 
@@ -42,9 +38,17 @@ public class ProfileFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             userNameText.setText(user.getDisplayName());
-            firestoreManager.getUserAchievements(user.getUid(), achievements -> {
-                AchievementsAdapter adapter = new AchievementsAdapter(achievements);
-                achievementsRecyclerView.setAdapter(adapter);
+            firestoreManager.getUserAchievements(user.getUid(), new FirestoreManager.FirestoreAchievementsCallback() {
+                @Override
+                public void onSuccess(List<Achievement> achievements) {
+                    AchievementsAdapter adapter = new AchievementsAdapter(achievements);
+                    achievementsRecyclerView.setAdapter(adapter);
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    userNameText.setText("Ошибка загрузки");
+                }
             });
         }
     }

@@ -9,21 +9,9 @@ public class Language {
         this.flagResourceId = flagResourceId;
     }
 
-    // Геттеры
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
+    public int getFlagResourceId() { return flagResourceId; }
 
-    public int getFlagResourceId() {
-        return flagResourceId;
-    }
-
-    // Сеттеры (если потребуется изменение данных)
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setFlagResourceId(int flagResourceId) {
-        this.flagResourceId = flagResourceId;
-    }
+    public void setName(String name) { this.name = name; }
+    public void setFlagResourceId(int flagResourceId) { this.flagResourceId = flagResourceId; }
 }

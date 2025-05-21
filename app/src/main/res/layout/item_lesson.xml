@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="8dp"
+    android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
@@ -14,49 +14,25 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <!-- Иконка урока -->
         <ImageView
             android:id="@+id/lessonIcon"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_lesson_default"
-            android:contentDescription="@string/lesson_icon"/>
+            android:src="@drawable/ic_lesson_default" />
 
-        <!-- Текстовые данные -->
-        <LinearLayout
+        <TextView
+            android:id="@+id/lessonTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="16dp"
-            android:orientation="vertical">
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/lessonTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="Негіздері 1"/>
-
-            <TextView
-                android:id="@+id/lessonProgress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="14sp"
-                tools:text="5/10 тапсырма орындалды"/>
-
-        </LinearLayout>
-
-        <!-- Статус завершения -->
-        <ImageView
-            android:id="@+id/completionStatus"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:src="@drawable/ic_check_circle"
-            android:contentDescription="@string/completed_status"/>
+        <TextView
+            android:id="@+id/lessonProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

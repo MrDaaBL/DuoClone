@@ -21,7 +21,12 @@
         <!-- Main Activity -->
         <activity
             android:name=".activities.MainActivity"
-            android:exported="false"/>
+            android:parentActivityName=".activities.LanguageSelectionActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.LanguageSelectionActivity" />
+        </activity>
+
 
         <!-- Добавьте LessonActivity -->
         <activity

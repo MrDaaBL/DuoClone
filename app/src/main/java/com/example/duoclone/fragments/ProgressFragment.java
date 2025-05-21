@@ -9,8 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.example.duoclone.R;
+import com.example.duoclone.models.User;
+import com.example.duoclone.models.VocabularyCard;
 import com.example.duoclone.utils.FirestoreManager;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.List;
 
 public class ProgressFragment extends Fragment {
     private ProgressBar progressBar;
@@ -24,20 +28,30 @@ public class ProgressFragment extends Fragment {
         xpText = view.findViewById(R.id.xp_text);
         firestoreManager = new FirestoreManager();
 
-        // Загрузка данных прогресса
         loadProgressData();
-
         return view;
     }
 
     private void loadProgressData() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        firestoreManager.loadProgress(userId, progress -> {
-            if (progress != null) {
-                progressBar.setProgress(progress.getCompletedLessons());
-                xpText.setText("XP: " + progress.getXp());
-            } else {
-                xpText.setText("Данные не найдены");
+        firestoreManager.loadProgress(userId, new FirestoreManager.FirestoreCallback() {
+            @Override
+            public void onSuccess(User progress) {
+                if (progress != null) {
+                    progressBar.setProgress(progress.getCompletedLessons());
+                    xpText.setText("XP: " + progress.getXp());
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                xpText.setText("Ошибка загрузки");
+            }
+
+            // Добавьте этот метод
+            @Override
+            public void onVocabularyLoaded(List<VocabularyCard> cards) {
+                // Пустая реализация, если не используется
             }
         });
     }

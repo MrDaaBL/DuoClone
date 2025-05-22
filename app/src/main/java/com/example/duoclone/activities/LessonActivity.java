@@ -1,54 +1,43 @@
 package com.example.duoclone.activities;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.widget.ImageButton;
 import com.example.duoclone.R;
+import com.example.duoclone.adapters.LessonAdapter;
+import com.example.duoclone.models.Lesson;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LessonActivity extends AppCompatActivity {
-    private MediaPlayer correctSound;
-    private MediaPlayer errorSound;
+    private RecyclerView lessonRecyclerView;
+    private LessonAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson);
 
-        // Инициализация звуков (исправленный синтаксис)
-        correctSound = MediaPlayer.create(this, R.raw.correct_sound);
-        errorSound = MediaPlayer.create(this, R.raw.error_sound);
+        // Кнопка "Назад"
+        ImageButton btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(v -> finish());
 
-        // Исправленный ID кнопки (должно быть R.id.btn_answer)
-        findViewById(R.id.btn_answer).setOnClickListener(v -> {
-            if (isAnswerCorrect()) {
-                playSound(correctSound);
-            } else {
-                playSound(errorSound);
-            }
-        });
+        // Инициализация RecyclerView
+        lessonRecyclerView = findViewById(R.id.lessonRecyclerView);
+        lessonRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Загрузка данных
+        List<Lesson> lessons = loadLessons();
+        adapter = new LessonAdapter(lessons);
+        lessonRecyclerView.setAdapter(adapter);
     }
 
-    private boolean isAnswerCorrect() {
-        // Логика проверки ответа
-        return true;
-    }
-
-    private void playSound(MediaPlayer mediaPlayer) {
-        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Освобождение ресурсов
-        if (correctSound != null) {
-            correctSound.release();
-        }
-        if (errorSound != null) {
-            errorSound.release();
-        }
+    private List<Lesson> loadLessons() {
+        List<Lesson> lessons = new ArrayList<>();
+        lessons.add(new Lesson("Урок 1", "Сәлем", "Привет"));
+        lessons.add(new Lesson("Урок 2", "Рахмет", "Спасибо"));
+        return lessons;
     }
 }

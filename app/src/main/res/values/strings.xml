@@ -13,6 +13,9 @@
     <string name="select_language">Choose your language</string>
     <string name="menu_progress">Progress</string>
     <string name="answer_button">Check Answer</string>
+    <string name="vocabulary">Vocabulary</string>
+    <string name="quiz">Quiz</string>
+    <string name="submit">Submit</string>
 
 
     <string name="menu_home">Home</string>

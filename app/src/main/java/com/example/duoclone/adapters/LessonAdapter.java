@@ -3,7 +3,6 @@ package com.example.duoclone.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +12,6 @@ import java.util.List;
 
 public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.ViewHolder> {
     private final List<Lesson> lessons;
-    private OnLessonClickListener listener;
 
     public LessonAdapter(List<Lesson> lessons) {
         this.lessons = lessons;
@@ -30,21 +28,9 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Lesson lesson = lessons.get(position);
-        holder.lessonTitle.setText(lesson.getTitle());
-
-        // Использование строкового ресурса
-        String progress = holder.itemView.getContext().getString(
-                R.string.lesson_progress,
-                lesson.getCompletedExercises(),
-                lesson.getTotalExercises()
-        );
-        holder.lessonProgress.setText(progress);
-
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onLessonClick(lesson);
-            }
-        });
+        holder.tvTitle.setText(lesson.getTitle());
+        holder.tvWord.setText(lesson.getWord());
+        holder.tvTranslation.setText(lesson.getTranslation());
     }
 
     @Override
@@ -53,23 +39,15 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView lessonIcon;
-        public final TextView lessonTitle;
-        public final TextView lessonProgress;
+        public final TextView tvTitle;
+        public final TextView tvWord;
+        public final TextView tvTranslation;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            lessonIcon = itemView.findViewById(R.id.lessonIcon);
-            lessonTitle = itemView.findViewById(R.id.lessonTitle);
-            lessonProgress = itemView.findViewById(R.id.lessonProgress);
+        public ViewHolder(View view) {
+            super(view);
+            tvTitle = view.findViewById(R.id.tvTitle);
+            tvWord = view.findViewById(R.id.tvWord);
+            tvTranslation = view.findViewById(R.id.tvTranslation);
         }
-    }
-
-    public void setOnLessonClickListener(OnLessonClickListener listener) {
-        this.listener = listener;
-    }
-
-    public interface OnLessonClickListener {
-        void onLessonClick(Lesson lesson);
     }
 }

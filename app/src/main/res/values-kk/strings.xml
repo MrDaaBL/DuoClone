@@ -19,6 +19,10 @@
     <string name="menu_progress">Прогресс</string>
     <string name="answer_button">Жауапты тексеріңіз</string>
     <string name="lesson_progress">%1$d/%2$d тапсырма орындалды</string>
+    <string name="vocabulary">Сөздік</string>
+    <string name="quiz">Тест</string>
+    <string name="submit">Енгізу</string>
+
 
     <!-- Мәзір -->
     <string name="action_settings">Баптаулар</string>

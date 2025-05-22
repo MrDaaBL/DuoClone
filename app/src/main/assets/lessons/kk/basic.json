@@ -1,21 +1,29 @@
 {
   "lessons": [
     {
-      "id": "kk_lesson1",
+      "id": "vocab_1",
       "title": "Негізгі сөздер",
       "type": "vocabulary",
-      "content": [
-        {
-          "word": "Сәлем",
-          "translation": "Hello",
-          "options": ["Hello", "Bonjour", "Hola", "Привет"]
-        },
-        {
-          "word": "Рахмет",
-          "translation": "Thank you",
-          "options": ["Thanks", "Danke", "Gracias", "Thank you"]
-        }
-      ]
+      "totalExercises": 5,
+      "completedExercises": 0,
+      "content": {
+        "word": "Сәлем",
+        "translation": "Hello",
+        "options": ["Hi", "Bonjour", "Hola"],
+        "image": "ic_hello"
+      }
+    },
+    {
+      "id": "quiz_1",
+      "title": "Тест: Сәлемдесу",
+      "type": "quiz",
+      "totalExercises": 3,
+      "completedExercises": 0,
+      "content": {
+        "question": "Қазақша 'Рахмет' дегеніміз не?",
+        "options": ["Сәлем", "Рақмет", "Кешіріңіз"],
+        "correctAnswerIndex": 1
+      }
     }
   ]
 }

@@ -8,46 +8,57 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.duoclone.R;
 import com.example.duoclone.models.Lesson;
+
 import java.util.List;
 
-public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.ViewHolder> {
-    private final List<Lesson> lessons;
+public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonViewHolder> {
 
-    public LessonAdapter(List<Lesson> lessons) {
-        this.lessons = lessons;
+    private List<Lesson> lessonList;
+    private OnLessonClickListener listener;
+
+    public LessonAdapter(List<Lesson> lessonList) {
+        this.lessonList = lessonList;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_lesson, parent, false);
-        return new ViewHolder(view);
+    public LessonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lesson, parent, false);
+        return new LessonViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Lesson lesson = lessons.get(position);
-        holder.tvTitle.setText(lesson.getTitle());
-        holder.tvWord.setText(lesson.getWord());
-        holder.tvTranslation.setText(lesson.getTranslation());
+    public void onBindViewHolder(@NonNull LessonViewHolder holder, int position) {
+        Lesson lesson = lessonList.get(position);
+        holder.titleTextView.setText(lesson.getTitle());
+
+        // Обработка клика
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onLessonClick(lesson);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return lessons.size();
+        return lessonList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView tvTitle;
-        public final TextView tvWord;
-        public final TextView tvTranslation;
+    public void setOnLessonClickListener(OnLessonClickListener listener) {
+        this.listener = listener;
+    }
 
-        public ViewHolder(View view) {
-            super(view);
-            tvTitle = view.findViewById(R.id.tvTitle);
-            tvWord = view.findViewById(R.id.tvWord);
-            tvTranslation = view.findViewById(R.id.tvTranslation);
+    public interface OnLessonClickListener {
+        void onLessonClick(Lesson lesson);
+    }
+
+    static class LessonViewHolder extends RecyclerView.ViewHolder {
+        TextView titleTextView;
+
+        public LessonViewHolder(@NonNull View itemView) {
+            super(itemView);
+            titleTextView = itemView.findViewById(R.id.lessonTitleTextView);
         }
     }
 }

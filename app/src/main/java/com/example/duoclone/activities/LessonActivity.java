@@ -8,6 +8,8 @@ import android.widget.ImageButton;
 import com.example.duoclone.R;
 import com.example.duoclone.adapters.LessonAdapter;
 import com.example.duoclone.models.Lesson;
+import com.example.duoclone.models.VocabularyCard;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +38,17 @@ public class LessonActivity extends AppCompatActivity {
 
     private List<Lesson> loadLessons() {
         List<Lesson> lessons = new ArrayList<>();
-        lessons.add(new Lesson("Урок 1", "Сәлем", "Привет"));
-        lessons.add(new Lesson("Урок 2", "Рахмет", "Спасибо"));
+
+        // Пример урока с корректными параметрами
+        lessons.add(new Lesson(
+                "vocab_1",          // id
+                "Сәлем",            // title
+                "vocabulary",       // type
+                5,                  // totalExercises
+                0,                  // completedExercises
+                new VocabularyCard("Сәлем", "Hello", List.of("Hi", "Bonjour")) // content
+        ));
+
         return lessons;
     }
 }

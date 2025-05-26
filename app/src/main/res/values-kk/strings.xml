@@ -14,7 +14,6 @@
     <string name="menu_lessons"> Lessons</string>
     <string name="menu_profile">Profile</string>
     <string name="previous">Артқа</string>
-    <string name="next">Келесі</string>
     <string name="finish">Аяқтау</string>
     <string name="menu_progress">Прогресс</string>
     <string name="answer_button">Жауапты тексеріңіз</string>
@@ -30,10 +29,7 @@
     <string name="menu_gallery">Галерея</string>
     <string name="menu_slideshow">Слайд-шоу</string>
 
-    <!-- Сабақтар -->
-    <string name="lesson_icon">Сабақ белгішесі</string>
-    <string name="completed_status">Аяқталды</string>
-    <string name="start_lesson">Сабақты бастау</string>
+
 
     <!-- Интернет жоқ -->
     <string name="no_internet_message">Интернет байланысы жоқ</string>
@@ -48,6 +44,24 @@
     <string name="japanese_language">Жапон</string>
     <string name="chinese_language">Қытай</string>
 
+    <!-- Сабақтар -->
+    <string name="lesson_icon">Сабақ белгішесі</string>
+    <string name="completed_status">Аяқталды</string>
+    <string name="start_lesson">Сабақты бастау</string>
+    <string name="basic_phrases">Basic Phrases</string>
+    <string name="greetings">Greetings</string>
+    <string name="correct_answer_message">Correct! +%d XP</string>
+    <string name="wrong_answer_message">Try again</string>
+    <string name="restart">Қайта бастау</string>
+    <string name="result_format">Нәтиже: %d/%d</string>
+    <string name="next">Келесі →</string>
+    <string name="grade_format">Баға: %d</string>
+    <string name="grade_5">5 (Өте жақсы)</string>
+    <string name="grade_4">4 (Жақсы)</string>
+    <string name="grade_3">3 (Қанағаттанарлық)</string>
+
     <!-- Firebase -->
-    <string name="default_web_client_id">468659197402-nfdg69289nfggdLecthtfgg93ri139vul.apps.googleusercontent.com</string>
+    <string name="default_web_client_id">
+        468659197402-nfdg69289nfggdLecthtfgg93ri139vul.apps.googleusercontent.com
+    </string>
 </resources>

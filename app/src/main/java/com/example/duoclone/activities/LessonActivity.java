@@ -1,44 +1,93 @@
 package com.example.duoclone.activities;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 import com.example.duoclone.R;
 import com.example.duoclone.adapters.QuizAdapter;
-import com.example.duoclone.models.Lesson;
 import com.example.duoclone.models.QuizQuestion;
 import com.example.duoclone.utils.LessonLoader;
 import java.util.List;
 
 public class LessonActivity extends AppCompatActivity implements QuizAdapter.OnAnswerListener {
-    private RecyclerView recyclerView;
+    private ViewPager2 questionsPager;
+    private View resultLayout;
+    private TextView tvResult;
+    private TextView tvGrade;
+    private int correctAnswers = 0;
+    private List<QuizQuestion> questions;
+    private QuizAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lesson);
+        setContentView(R.layout.activity_lesson_pager);
 
-        // Инициализация RecyclerView
-        recyclerView = findViewById(R.id.recyclerView); // Изменено с quizRecyclerView
+        initViews();
+        loadQuestions();
+    }
 
-        // Загрузка вопросов
-        String language = getIntent().getStringExtra("language");
+    private void initViews() {
+        questionsPager = findViewById(R.id.questions_pager);
+        resultLayout = findViewById(R.id.result_layout);
+        tvResult = findViewById(R.id.tv_result);
+        tvGrade = findViewById(R.id.tv_grade);
+    }
+
+    private void loadQuestions() {
         LessonLoader lessonLoader = new LessonLoader();
-        List<Lesson> lessons = lessonLoader.loadLessons(language);
+        questions = lessonLoader.loadExtendedLessons("kk");
 
-        if (!lessons.isEmpty() && lessons.get(0).getContent() instanceof QuizQuestion) {
-            QuizQuestion question = (QuizQuestion) lessons.get(0).getContent();
-            List<QuizQuestion> questions = List.of(question);
+        adapter = new QuizAdapter(this, questions, this);
+        questionsPager.setAdapter(adapter);
+        questionsPager.setUserInputEnabled(false);
+        resultLayout.setVisibility(View.GONE);
+    }
 
-            QuizAdapter adapter = new QuizAdapter(questions, this);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(adapter);
+    @Override
+    public void onAnswerSelected(boolean isCorrect) {
+        if (isCorrect) {
+            correctAnswers++;
         }
     }
 
     @Override
-    public void onAnswer(boolean isCorrect, int xpEarned) {
-        // Обработка ответа пользователя
+    public void moveToNextQuestion() {
+        int nextItem = questionsPager.getCurrentItem() + 1;
+        if (nextItem < adapter.getItemCount()) {
+            questionsPager.setCurrentItem(nextItem, true);
+        } else {
+            showResults();
+        }
+    }
+
+    private void showResults() {
+        runOnUiThread(() -> {
+            tvResult.setText(getResultText());
+            tvGrade.setText(getGradeText());
+            resultLayout.setVisibility(View.VISIBLE);
+        });
+    }
+
+    private String getResultText() {
+        return String.format(getString(R.string.result_format),
+                correctAnswers,
+                questions.size());
+    }
+
+    private String getGradeText() {
+        double percentage = (double) correctAnswers / questions.size();
+        if (percentage >= 0.8) return getString(R.string.grade_5);
+        if (percentage >= 0.6) return getString(R.string.grade_4);
+        return getString(R.string.grade_3);
+    }
+
+    public void restartLesson(View view) {
+        correctAnswers = 0;
+        adapter.resetQuiz();
+        questionsPager.setCurrentItem(0, false);
+        resultLayout.setVisibility(View.GONE);
     }
 }

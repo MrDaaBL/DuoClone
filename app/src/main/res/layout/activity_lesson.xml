@@ -98,4 +98,9 @@
             android:visibility="gone" />
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/quizRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

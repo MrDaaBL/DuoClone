@@ -21,7 +21,7 @@ public class LanguageSelectionActivity extends AppCompatActivity {
 
         List<Language> languages = new ArrayList<>();
         languages.add(new Language("English", R.drawable.flag_usa));
-        languages.add(new Language("Русский", R.drawable.flag_russia));
+        languages.add(new Language("Казақ тілі", R.drawable.ic_flag_kz));
         languages.add(new Language("Español", R.drawable.flag_spain));
         languages.add(new Language("Français", R.drawable.flag_france));
         languages.add(new Language("Deutsch", R.drawable.flag_germany));

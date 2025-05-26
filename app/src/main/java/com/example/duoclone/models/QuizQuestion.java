@@ -3,18 +3,30 @@ package com.example.duoclone.models;
 import java.util.List;
 
 public class QuizQuestion {
-    private String question;
+    private String id;
+    private String questionText;
     private List<String> options;
-    private int correctAnswerIndex;
+    private int correctOptionIndex;
+    private int xpReward;
 
-    public QuizQuestion(String question, List<String> options, int correctAnswerIndex) {
-        this.question = question;
+    // Полный конструктор
+    public QuizQuestion(String id, String questionText,
+                        List<String> options,
+                        int correctOptionIndex,
+                        int xpReward) {
+        this.id = id;
+        this.questionText = questionText;
         this.options = options;
-        this.correctAnswerIndex = correctAnswerIndex;
+        this.correctOptionIndex = correctOptionIndex;
+        this.xpReward = xpReward;
     }
 
     // Геттеры
-    public String getQuestion() { return question; }
+    public String getId() { return id; }
+    public String getQuestionText() { return questionText; }
     public List<String> getOptions() { return options; }
-    public int getCorrectAnswerIndex() { return correctAnswerIndex; }
+    public String getOption1() { return options.get(0); }
+    public String getOption2() { return options.get(1); }
+    public int getCorrectOptionIndex() { return correctOptionIndex; }
+    public int getXpReward() { return xpReward; }
 }

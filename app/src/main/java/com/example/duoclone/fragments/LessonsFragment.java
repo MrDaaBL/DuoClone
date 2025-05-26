@@ -52,15 +52,4 @@ public class LessonsFragment extends Fragment {
         lessons.add(new Lesson("2", "Числа", "vocabulary", 7, 0, null));
         return lessons;
     }
-    private void setupLessonClickListener() {
-        adapter.setOnLessonClickListener(lesson -> {
-            Intent intent = new Intent(getActivity(), LessonActivity.class);
-
-            // Передаем ID урока и его тип
-            intent.putExtra("LESSON_ID", lesson.getId());
-            intent.putExtra("LESSON_TYPE", lesson.getType());
-
-            startActivity(intent);
-        });
-    }
 }

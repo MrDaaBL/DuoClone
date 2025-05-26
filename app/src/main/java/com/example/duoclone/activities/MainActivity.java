@@ -8,7 +8,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.duoclone.R;
-import com.example.duoclone.utils.AppMusicPlayer;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,9 +17,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        AppMusicPlayer.initialize(this);
-        AppMusicPlayer.startMusic();
 
         // Настройка Navigation Drawer
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -42,17 +38,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        AppMusicPlayer.pauseMusic();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        AppMusicPlayer.startMusic();
     }
 }

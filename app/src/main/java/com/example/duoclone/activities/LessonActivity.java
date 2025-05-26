@@ -4,63 +4,51 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.widget.ImageButton;
 import com.example.duoclone.R;
-import com.example.duoclone.adapters.QuizAdapter;
-import com.example.duoclone.models.QuizQuestion;
-import com.example.duoclone.utils.SoundManager;
+import com.example.duoclone.adapters.LessonAdapter;
+import com.example.duoclone.models.Lesson;
+import com.example.duoclone.models.VocabularyCard;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class LessonActivity extends AppCompatActivity {
-    private RecyclerView quizRecyclerView;
-    private QuizAdapter quizAdapter;
-    private SoundManager soundManager;
+    private RecyclerView lessonRecyclerView;
+    private LessonAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson);
 
-        soundManager = new SoundManager(this);
+        // Кнопка "Назад"
+        ImageButton btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(v -> finish());
 
         // Инициализация RecyclerView
-        quizRecyclerView = findViewById(R.id.quizRecyclerView);
-        quizRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        lessonRecyclerView = findViewById(R.id.lessonRecyclerView);
+        lessonRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Загрузка вопросов
-        List<QuizQuestion> questions = loadQuestions();
-        quizAdapter = new QuizAdapter(questions, isCorrect -> {
-            // Обработка правильного/неправильного ответа
-            if (isCorrect) {
-                soundManager.playCorrectSound();
-            } else {
-                soundManager.playWrongSound();
-            }
-        }, soundManager);
-
-        quizRecyclerView.setAdapter(quizAdapter);
+        // Загрузка данных
+        List<Lesson> lessons = loadLessons();
+        adapter = new LessonAdapter(lessons);
+        lessonRecyclerView.setAdapter(adapter);
     }
 
-    private List<QuizQuestion> loadQuestions() {
-        List<QuizQuestion> questions = new ArrayList<>();
+    private List<Lesson> loadLessons() {
+        List<Lesson> lessons = new ArrayList<>();
 
-        // Пример вопроса (замените реальными данными)
-        questions.add(new QuizQuestion(
-                "q1",
-                "Как переводится 'Hello'?",
-                Arrays.asList("Привет", "Пока"),
-                0, // Индекс правильного ответа
-                "multiple_choice",
-                10
+        // Пример урока с корректными параметрами
+        lessons.add(new Lesson(
+                "vocab_1",          // id
+                "Сәлем",            // title
+                "vocabulary",       // type
+                5,                  // totalExercises
+                0,                  // completedExercises
+                new VocabularyCard("Сәлем", "Hello", List.of("Hi", "Bonjour")) // content
         ));
 
-        return questions;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        soundManager.release();
+        return lessons;
     }
 }

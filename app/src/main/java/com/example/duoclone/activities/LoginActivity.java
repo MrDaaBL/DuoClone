@@ -3,6 +3,8 @@ package com.example.duoclone.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -25,6 +27,9 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "GoogleAuth";
     private FirebaseAuth mAuth;
     private GoogleSignInClient googleSignInClient;
+    private EditText emailField, passwordField;
+    private Button loginButton, registerButton;
+
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -37,6 +42,16 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        emailField = findViewById(R.id.editTextEmail);
+        passwordField = findViewById(R.id.editTextPassword);
+        loginButton = findViewById(R.id.buttonLogin);
+        registerButton = findViewById(R.id.buttonRegister);
+
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -46,12 +61,50 @@ public class LoginActivity extends AppCompatActivity {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        findViewById(R.id.google_sign_in_button).setOnClickListener(v -> signIn());
+
+        loginButton.setOnClickListener(v -> signIn());
+        registerButton.setOnClickListener(v -> register());
     }
 
     private void signIn() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
         signInLauncher.launch(signInIntent);
+        String email = emailField.getText().toString().trim();
+        String password = passwordField.getText().toString().trim();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Email және пароль енгізіңіз", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> {
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Кіру сәтсіз: " + e.getMessage(), Toast.LENGTH_LONG).show()
+                );
+    }
+
+    private void register() {
+        String email = emailField.getText().toString().trim();
+        String password = passwordField.getText().toString().trim();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Email және пароль енгізіңіз", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> {
+                    Toast.makeText(this, "Тіркелу сәтті өтті", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Тіркелу қатесі: " + e.getMessage(), Toast.LENGTH_LONG).show()
+                );
     }
 
     private void handleSignInResult(Intent data) {

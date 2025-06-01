@@ -38,7 +38,12 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         usernameTextView = view.findViewById(R.id.text_username);
         lessonTextView = view.findViewById(R.id.text_lessons_completed);
@@ -57,9 +62,8 @@ public class ProfileFragment extends Fragment {
             loadUserProfile();
             loadAchievements();
         }
-
-        return view;
     }
+
 
     private void loadUserProfile() {
         db.collection("users").document(user.getUid())

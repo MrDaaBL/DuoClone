@@ -1,33 +1,23 @@
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:padding="12dp"
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackground"
+    android:layout_marginBottom="8dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/achievement_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:text="Achievement Title"
+        android:textStyle="bold"
+        android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/achievement_image"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:id="@+id/achievement_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/achievement_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"/>
-
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/achievement_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Achievement Description"
+        android:textSize="14sp" />
+</LinearLayout>

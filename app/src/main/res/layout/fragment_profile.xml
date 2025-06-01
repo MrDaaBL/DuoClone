@@ -7,6 +7,13 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_achievements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:visibility="gone" />
+
     <!-- Если не авторизован -->
     <LinearLayout
         android:id="@+id/auth_section"
@@ -71,12 +78,37 @@
             android:layout_marginTop="8dp"/>
 
         <TextView
-            android:id="@+id/username_text"
+            android:id="@+id/text_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username"
+            android:text="Аты: "
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/text_lessons_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сабақтар: 0"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/text_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Деңгей: 1"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Жетістіктер"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" />
 
         <TextView
             android:id="@+id/email_text"

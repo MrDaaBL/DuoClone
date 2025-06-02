@@ -7,23 +7,35 @@ public class User {
     private int progress;
     private int xp;
     private int completedLessons;
+    private String id;
+    private String displayName;
+    private String photoUrl;
 
     public User() {}
 
-    public User(String uid, String name, String email, int progress, int xp, int completedLessons) {
-        this.uid = uid;
-        this.name = name;
+    public User(String id, String displayName, String email, String photoUrl) {
+        this.id = id;
+        this.displayName = displayName;
         this.email = email;
-        this.progress = progress;
-        this.xp = xp;
-        this.completedLessons = completedLessons;
+        this.photoUrl = photoUrl;
     }
+
+    public User(String uid, String displayName, String email, int i, int i1, int i2) {
+        this.uid = uid;
+        this.displayName = displayName;
+        this.email = email;
+        this.progress = i;
+        this.xp = i1;
+    }
+
 
     // Геттеры и сеттеры...
     public int getCompletedLessons() {
         return completedLessons;
     }
     public String getUid() { return uid; }
+    public String getDisplayName() { return displayName; }
+    public String getPhotoUrl() { return photoUrl; }
 
     public String getName() { return name; }
     public String getEmail() { return email; }

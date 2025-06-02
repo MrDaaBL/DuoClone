@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.duoclone.models.Achievement;
 import com.example.duoclone.models.User;
 import com.example.duoclone.models.VocabularyCard;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -95,6 +96,21 @@ public class FirestoreManager {
         void onVocabularyLoaded(List<VocabularyCard> cards); // Добавлен новый метод
     }
 
+    public static void saveUserData(GoogleSignInAccount account) {
+        User user = new User(
+                account.getId(),
+                account.getDisplayName(),
+                account.getEmail(),
+                account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : ""
+        );
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .document(account.getId())
+                .set(user)
+                .addOnSuccessListener(aVoid -> Log.d("Firestore", "User data saved"))
+                .addOnFailureListener(e -> Log.w("Firestore", "Error saving user", e));
+    }
     public void loadVocabularyProgress(String userId, FirestoreCallback callback) {
         db.collection("users")
                 .document(userId)

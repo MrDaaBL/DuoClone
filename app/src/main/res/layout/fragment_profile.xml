@@ -1,145 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_achievements"
+    <!-- Контейнер для НЕавторизованного состояния -->
+    <LinearLayout
+        android:id="@+id/authButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:visibility="gone" />
-
-    <!-- Если не авторизован -->
-    <LinearLayout
-        android:id="@+id/auth_section"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_marginBottom="8dp"/>
 
         <EditText
             android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Құпиясөз"
             android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_marginBottom="16dp"/>
 
         <Button
-            android:id="@+id/buttonLogin"
-            android:text="Кіру"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/buttonRegister"
-            android:text="Тіркелу"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/buttonGoogle"
+            android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            android:text="@string/login"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/googleSignInButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_in_with_google"/>
     </LinearLayout>
 
-    <!-- Если авторизован -->
+    <!-- Контейнер для авторизованного состояния -->
     <LinearLayout
-        android:id="@+id/profile_content"
-        android:orientation="vertical"
-        android:visibility="gone"
+        android:id="@+id/profileDataLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!-- ТУТ: достижения, имя, email, и т.д. -->
-        <TextView
-            android:id="@+id/textViewUserEmail"
-            android:text="Email: "
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/buttonLogout"
-            android:text="Шығу"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/text_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Аты: "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:id="@+id/text_lessons_completed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Сабақтар: 0"
-            android:textSize="16sp"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:id="@+id/text_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Деңгей: 1"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Жетістіктер"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:id="@+id/email_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/avatar_image"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:src="@drawable/ic_person"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_person"/>
 
-        <LinearLayout
-            android:id="@+id/achievements_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:orientation="vertical">
-
-            <!-- сюда можно вставить достижения -->
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/logout_button"
+        <TextView
+            android:id="@+id/text_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Шығу"
-            android:visibility="gone" />
+            android:layout_gravity="center_horizontal"
+            android:text="Аты: "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
 
+        <TextView
+            android:id="@+id/textViewUserEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Email: "
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/text_lessons_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Сабақтар: 0"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/text_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Деңгей: 1"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Жетістіктер"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_achievements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"/>
+
+        <Button
+            android:id="@+id/buttonLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:text="Шығу"/>
     </LinearLayout>
 </LinearLayout>

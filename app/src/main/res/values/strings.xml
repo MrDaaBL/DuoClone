@@ -14,7 +14,8 @@
     <string name="vocabulary">Vocabulary</string>
     <string name="quiz">Quiz</string>
     <string name="submit">Submit</string>
-
+    <string name="back">Артқа</string>
+    <string name="next_level">Келесі деңгей</string>
     <string name="login">Кіру</string>
     <string name="register">Тіркелу</string>
     <string name="sign_in_with_google">Google арқылы кіру</string>

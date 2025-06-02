@@ -59,8 +59,6 @@
     <string name="grade_5">5 (Өте жақсы)</string>
     <string name="grade_4">4 (Жақсы)</string>
     <string name="grade_3">3 (Қанағаттанарлық)</string>
-    <string name="back">Артқа</string>
-    <string name="next_level">Келесі деңгей</string>
 
     <!-- Firebase -->
     <string name="default_web_client_id">

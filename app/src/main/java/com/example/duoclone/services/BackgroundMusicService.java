@@ -7,8 +7,8 @@ import android.os.IBinder;
 
 import com.example.duoclone.R;
 
-public class MusicService extends Service {
-    private MediaPlayer player;
+public class BackgroundMusicService extends Service {
+    private MediaPlayer mediaPlayer;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -18,27 +18,23 @@ public class MusicService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        player = MediaPlayer.create(this, R.raw.background_music);
-        player.setLooping(true);
-        player.setVolume(0.3f, 0.3f);
+        mediaPlayer = MediaPlayer.create(this, R.raw.background_music);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.setVolume(0.3f, 0.3f);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (!player.isPlaying()) {
-            player.start();
-        }
+        mediaPlayer.start();
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        if (player != null) {
-            if (player.isPlaying()) {
-                player.stop();
-            }
-            player.release();
-        }
         super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
     }
 }

@@ -39,5 +39,6 @@
         android:title="Музыканы Қосу / Өшіру"
         android:checkable="true"
         android:checked="true" />
+
     </group>
 </menu>

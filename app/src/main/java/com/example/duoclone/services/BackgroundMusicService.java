@@ -13,6 +13,7 @@ import com.example.duoclone.R;
 public class BackgroundMusicService extends Service {
     private MediaPlayer mediaPlayer;
     private boolean isRunning = false;
+    private float volume = 0.5f;
 
     @Override
     public void onCreate() {
@@ -20,16 +21,20 @@ public class BackgroundMusicService extends Service {
         mediaPlayer = MediaPlayer.create(this, R.raw.background_music); // Файл в res/raw/
         mediaPlayer.setLooping(true); // Зацикливание музыки
         Log.d("MusicService", "Service created");
+        mediaPlayer.setVolume(volume, volume);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (!isRunning) {
-            mediaPlayer.start();
-            isRunning = true;
-            Log.d("MusicService", "Music started");
+        if (intent != null && intent.hasExtra("action")) {
+            String action = intent.getStringExtra("action");
+            if ("set_volume".equals(action)) {
+                volume = intent.getFloatExtra("volume", 0.5f);
+                mediaPlayer.setVolume(volume, volume);
+            }
         }
-        return START_STICKY; // Сервис перезапустится, если будет убит системой
+        mediaPlayer.start();
+        return START_STICKY;
     }
 
     @Override
@@ -47,20 +52,5 @@ public class BackgroundMusicService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    // Методы для управления музыкой из других классов
-    public void pauseMusic() {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-            isRunning = false;
-        }
-    }
-
-    public void resumeMusic() {
-        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-            isRunning = true;
-        }
     }
 }
